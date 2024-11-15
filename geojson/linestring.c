@@ -2,9 +2,14 @@
 // Created by Daniel Maier on 15.11.24.
 //
 
+#include <lib/geo_array.h>
+#include <lib/rdp.h>
+
 #include "php.h"
 #include "php_geospatial.h"
 #include "geospatial_arginfo.h"
+
+geo_array *geo_hashtable_to_array(zval *array);
 
 static bool valid_linestring(int argument_nr, zval *points) {
     HashTable *ht = HASH_OF(points);
@@ -137,4 +142,45 @@ ZEND_METHOD(Geospatial_GeoJSON_LineString, getPoints) {
         true,
         false
     );
+}
+
+ZEND_METHOD(Geospatial_GeoJSON_LineString, simplify) {
+    double epsilon;
+    geo_array *points;
+    int i;
+
+    ZEND_PARSE_PARAMETERS_START(1, 1)
+        Z_PARAM_DOUBLE(epsilon)
+    ZEND_PARSE_PARAMETERS_END();
+
+    array_init(return_value);
+
+    // Convert input data
+    points = geo_hashtable_to_array(
+        zend_read_property(
+            Z_OBJCE_P(ZEND_THIS),
+            Z_OBJ_P(ZEND_THIS),
+            "points",
+            strlen("points"),
+            false,
+            NULL
+        )
+    );
+    if (!points) {
+        return;
+    }
+
+    rdp_simplify(points, epsilon, 0, points->count - 1);
+
+    for (i = 0; i < points->count; i++) {
+        if (!points->status[i]) {
+            continue;
+        }
+
+        zval pair;
+        array_init(&pair);
+        add_next_index_double(&pair, points->x[i]);
+        add_next_index_double(&pair, points->y[i]);
+        add_next_index_zval(return_value, &pair);
+    }
 }

@@ -23,5 +23,9 @@ namespace Geospatial\GeoJSON
         ) {}
 
         public function getPoints(): array {}
+
+        public function simplify(
+            float $epsilon = 0.1,
+        ): array {}
     }
 }
