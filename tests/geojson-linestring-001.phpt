@@ -16,6 +16,10 @@ var_dump(
     $outputArray,
 );
 
+var_dump(
+    $outputArray === $inputArray,
+);
+
 ?>
 --EXPECT--
 array(2) {
@@ -34,3 +38,4 @@ array(2) {
     int(4)
   }
 }
+bool(true)
