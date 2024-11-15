@@ -14,7 +14,7 @@ namespace
 
 namespace Geospatial\GeoJSON
 {
-    final class LineString
+    final class LineString implements \Countable
     {
         private readonly array $points;
 
@@ -26,6 +26,8 @@ namespace Geospatial\GeoJSON
 
         public function simplify(
             float $epsilon = 0.1,
-        ): array {}
+        ): LineString {}
+
+        public function count(): int {}
     }
 }

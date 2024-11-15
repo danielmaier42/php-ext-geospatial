@@ -11,6 +11,8 @@
 
 geo_array *geo_hashtable_to_array(zval *array);
 
+extern zend_class_entry *geospatial_GeoJSON_LineString_ce;
+
 static bool valid_linestring(int argument_nr, zval *points) {
     HashTable *ht = HASH_OF(points);
     zval *element, *longitude, *latitude;
@@ -147,13 +149,14 @@ ZEND_METHOD(Geospatial_GeoJSON_LineString, getPoints) {
 ZEND_METHOD(Geospatial_GeoJSON_LineString, simplify) {
     double epsilon;
     geo_array *points;
+    zval simplified_points;
     int i;
 
     ZEND_PARSE_PARAMETERS_START(1, 1)
         Z_PARAM_DOUBLE(epsilon)
     ZEND_PARSE_PARAMETERS_END();
 
-    array_init(return_value);
+    array_init(&simplified_points);
 
     // Convert input data
     points = geo_hashtable_to_array(
@@ -181,6 +184,39 @@ ZEND_METHOD(Geospatial_GeoJSON_LineString, simplify) {
         array_init(&pair);
         add_next_index_double(&pair, points->x[i]);
         add_next_index_double(&pair, points->y[i]);
-        add_next_index_zval(return_value, &pair);
+        add_next_index_zval(&simplified_points, &pair);
     }
+
+    // Clean up
+    geo_array_dtor(points);
+
+    // Prepare return value
+    object_init_ex(return_value, geospatial_GeoJSON_LineString_ce);
+    zend_update_property(
+        Z_OBJCE_P(return_value),
+        Z_OBJ_P(return_value),
+        "points",
+        strlen("points"),
+        &simplified_points
+    );
+    zval_ptr_dtor(&simplified_points);
+}
+
+ZEND_METHOD(Geospatial_GeoJSON_LineString, count) {
+    zval *points;
+
+    points = zend_read_property(
+        Z_OBJCE_P(ZEND_THIS),
+        Z_OBJ_P(ZEND_THIS),
+        "points",
+        strlen("points"),
+        false,
+        NULL
+    );
+
+    RETURN_LONG(
+        zend_hash_num_elements(
+            HASH_OF(points)
+        )
+    );
 }

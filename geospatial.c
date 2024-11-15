@@ -8,6 +8,7 @@
 #include "ext/standard/info.h"
 #include "php_geospatial.h"
 #include "geospatial_arginfo.h"
+#include "zend_interfaces.h"
 
 #include "lib/geo_array.h"
 #include "lib/rdp.h"
@@ -125,7 +126,9 @@ ZEND_FUNCTION(rdp_simplify) {
 zend_class_entry *geospatial_GeoJSON_LineString_ce;
 
 PHP_MINIT_FUNCTION(geospatial) {
-    geospatial_GeoJSON_LineString_ce = register_class_Geospatial_GeoJSON_LineString();
+    geospatial_GeoJSON_LineString_ce = register_class_Geospatial_GeoJSON_LineString(
+        zend_ce_countable
+    );
 
     return SUCCESS;
 }
