@@ -11,7 +11,7 @@ AS_VAR_IF([PHP_GEOSPATIAL], [no],, [
     [Define to 1 if the PHP extension 'geospatial' is available.])
 
   PHP_NEW_EXTENSION([geospatial],
-    [geospatial.c lib/rdp.c lib/geo_array.c],
+    [geospatial.c lib/rdp.c lib/geo_array.c geojson/linestring.c],
     [$ext_shared],,
     [-DZEND_ENABLE_STATIC_TSRMLS_CACHE=1])
 ])

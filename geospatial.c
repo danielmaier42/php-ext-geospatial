@@ -79,7 +79,7 @@ geo_array *geo_hashtable_to_array(zval *array) {
             tmp->y[i] = lat;
             tmp->status[i] = true;
             i++;
-    }
+        }
     ZEND_HASH_FOREACH_END();
     return tmp;
 
@@ -122,6 +122,12 @@ ZEND_FUNCTION(rdp_simplify) {
     }
 }
 
+zend_class_entry *geospatial_GeoJSON_LineString_ce;
+
+PHP_MINIT_FUNCTION(geospatial) {
+    geospatial_GeoJSON_LineString_ce = register_class_Geospatial_GeoJSON_LineString();
+}
+
 /* {{{ PHP_RINIT_FUNCTION */
 PHP_RINIT_FUNCTION(geospatial) {
 #if defined(ZTS) && defined(COMPILE_DL_GEOSPATIAL)
@@ -133,29 +139,24 @@ PHP_RINIT_FUNCTION(geospatial) {
 
 /* }}} */
 
-/* {{{ PHP_MINFO_FUNCTION */
 PHP_MINFO_FUNCTION(geospatial) {
     php_info_print_table_start();
     php_info_print_table_row(2, "geospatial support", "enabled");
     php_info_print_table_end();
 }
 
-/* }}} */
-
-/* {{{ geospatial_module_entry */
 zend_module_entry geospatial_module_entry = {
     STANDARD_MODULE_HEADER,
-    "geospatial", /* Extension name */
-    ext_functions, /* zend_function_entry */
-    NULL, /* PHP_MINIT - Module initialization */
-    NULL, /* PHP_MSHUTDOWN - Module shutdown */
-    PHP_RINIT(geospatial), /* PHP_RINIT - Request initialization */
-    NULL, /* PHP_RSHUTDOWN - Request shutdown */
-    PHP_MINFO(geospatial), /* PHP_MINFO - Module info */
-    PHP_GEOSPATIAL_VERSION, /* Version */
+    "geospatial",
+    ext_functions,
+    PHP_MINIT(geospatial),
+    NULL,
+    PHP_RINIT(geospatial),
+    NULL,
+    PHP_MINFO(geospatial),
+    PHP_GEOSPATIAL_VERSION,
     STANDARD_MODULE_PROPERTIES
 };
-/* }}} */
 
 #ifdef COMPILE_DL_GEOSPATIAL
 # ifdef ZTS

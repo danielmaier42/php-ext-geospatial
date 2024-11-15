@@ -1,10 +1,14 @@
 --TEST--
-Check if geospatial is loaded
---EXTENSIONS--
-geospatial
+Check if rdp_simplify exists
 --FILE--
 <?php
-echo 'The extension "geospatial" is available';
+var_dump(
+    rdp_simplify(
+        [],
+        0.1,
+    ),
+);
 ?>
 --EXPECT--
-The extension "geospatial" is available
+array(0) {
+}
