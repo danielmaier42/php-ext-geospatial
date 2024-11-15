@@ -18,7 +18,17 @@
 
 ZEND_FUNCTION(rdp_simplify)
 {
+	zval *points_array;
+	double epsilon;
 
+	// Parse Parameters
+	ZEND_PARSE_PARAMETERS_START(2, 2)
+		Z_PARAM_ARRAY(points_array)
+		Z_PARAM_DOUBLE(epsilon)
+	ZEND_PARSE_PARAMETERS_END();
+
+	// array_init(return_value);
+	RETURN_EMPTY_ARRAY();
 }
 
 /* {{{ PHP_RINIT_FUNCTION */
