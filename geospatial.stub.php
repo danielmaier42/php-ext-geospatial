@@ -21,5 +21,7 @@ namespace Geospatial\GeoJSON
         public function __construct(
             array $points,
         ) {}
+
+        public function getPoints(): array {}
     }
 }

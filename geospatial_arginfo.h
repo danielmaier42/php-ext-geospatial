@@ -1,5 +1,5 @@
 /* This is a generated file, edit the .stub.php file instead.
- * Stub hash: fdd04fa32f12774f403d66dc0ecf5ba25d3f7c00 */
+ * Stub hash: bd5aef95a986769214b80a169826d525113a60fd */
 
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_rdp_simplify, 0, 1, IS_ARRAY, 0)
 	ZEND_ARG_TYPE_INFO(0, coordinates, IS_ARRAY, 0)
@@ -10,9 +10,13 @@ ZEND_BEGIN_ARG_INFO_EX(arginfo_class_Geospatial_GeoJSON_LineString___construct, 
 	ZEND_ARG_TYPE_INFO(0, points, IS_ARRAY, 0)
 ZEND_END_ARG_INFO()
 
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_class_Geospatial_GeoJSON_LineString_getPoints, 0, 0, IS_ARRAY, 0)
+ZEND_END_ARG_INFO()
+
 
 ZEND_FUNCTION(rdp_simplify);
 ZEND_METHOD(Geospatial_GeoJSON_LineString, __construct);
+ZEND_METHOD(Geospatial_GeoJSON_LineString, getPoints);
 
 
 static const zend_function_entry ext_functions[] = {
@@ -23,6 +27,7 @@ static const zend_function_entry ext_functions[] = {
 
 static const zend_function_entry class_Geospatial_GeoJSON_LineString_methods[] = {
 	ZEND_ME(Geospatial_GeoJSON_LineString, __construct, arginfo_class_Geospatial_GeoJSON_LineString___construct, ZEND_ACC_PUBLIC)
+	ZEND_ME(Geospatial_GeoJSON_LineString, getPoints, arginfo_class_Geospatial_GeoJSON_LineString_getPoints, ZEND_ACC_PUBLIC)
 	ZEND_FE_END
 };
 
