@@ -126,6 +126,8 @@ zend_class_entry *geospatial_GeoJSON_LineString_ce;
 
 PHP_MINIT_FUNCTION(geospatial) {
     geospatial_GeoJSON_LineString_ce = register_class_Geospatial_GeoJSON_LineString();
+
+    return SUCCESS;
 }
 
 /* {{{ PHP_RINIT_FUNCTION */
