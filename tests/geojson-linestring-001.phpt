@@ -3,12 +3,34 @@ Check if line string exists
 --FILE--
 <?php
 
-$lineString = new \Geospatial\GeoJSON\LineString([]);
+$inputArray = [
+    [1, 2],
+    [3, 4],
+];
+
+$lineString = new \Geospatial\GeoJSON\LineString($inputArray);
+
+$outputArray = $lineString->getPoints();
 
 var_dump(
-    get_class($lineString),
+    $outputArray,
 );
 
 ?>
 --EXPECT--
-string(29) "Geospatial\GeoJSON\LineString"
+array(2) {
+  [0]=>
+  array(2) {
+    [0]=>
+    int(1)
+    [1]=>
+    int(2)
+  }
+  [1]=>
+  array(2) {
+    [0]=>
+    int(3)
+    [1]=>
+    int(4)
+  }
+}
